@@ -1,0 +1,24 @@
+<md-progress-bar *ngIf="waitingForDelete" color="primary" mode="indeterminate"></md-progress-bar>
+    <h1>Connectors List</h1>
+    <div class="connector-content">
+<div *ngIf="configured >0">
+    <md-list>
+       <md-list-item *ngFor="let connector of configuredConnectors">
+          <md-icon md-list-icon>settings_input_component</md-icon>
+          <h4 md-line>{{connector.name}}</h4>
+          <p md-line class="demo-2">{{connector.infos.name}} ({{connector.infos.version}})</p>
+          <span mdTooltip="Edit" mdTooltipPosition="right" ><a md-mini-fab routerLink="../edit/{{connector.name}}"><md-icon>edit</md-icon></a></span>
+          <span mdTooltip="Monitor" mdTooltipPosition="right" ><a md-mini-fab routerLink="../monitor/{{connector.name}}" class="delete"><md-icon>timeline</md-icon></a></span>
+          <span mdTooltip="Delete" mdTooltipPosition="right" ><a md-mini-fab (click)="deleteConnector(connector.name)" class="delete"><md-icon>delete</md-icon></a></span>
+       </md-list-item>
+       <md-divider></md-divider>
+    </md-list>
+  </div>
+  <div *ngIf="configured == 0">
+    <md-card id="no_connector">No connector installed. Click add connector button to get started.</md-card>
+  </div>
+
+</div>
+<div class="connector-add">
+   <span mdTooltip="Add a connector" mdTooltipPosition="right" ><button md-fab (click)="openDialog()"><md-icon>add</md-icon></button></span>
+</div>

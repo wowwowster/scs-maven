@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="robots" content="NOINDEX,NOFOLLOW" >
+	<title>SCS Web Manager</title>
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+	<link rel="stylesheet" href="../static/css/pages.css" type="text/css" >
+	<link rel="stylesheet" href="../static/css/jquery-ui/jquery-ui.min.css">
+
+	<script type="text/javascript" src="../static/script/jquery.min.js" ></script>
+	<script src="../static/script/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../static/script/jquery.flot.js"></script>
+	<script src="../static/script/jquery.flot.time.js"></script>
+	<script type="text/javascript" src="../static/script/manager.js" ></script>
+	<script type="text/javascript" src="../static/script/indexer-dashboard.js" ></script>
+	<script type="text/javascript" src="../static/script/indexer-dbbrowsing.js" ></script>
+</head>
+<body>
+	<div id="body" >
+		<div id="tabs">
+			<ul id="tablist" >
+				<li><a href="#tabs-1">Home</a></li>
+				<li style="display:none"><a href="#tabs-2">GSA</a></li>
+				<li><a href="#tabs-3">Connectors</a></li>
+				<!-- <li><a href="#tabs-4">Authentication</a></li> -->
+				<li><a href="#tabs-4">Cloud Search</a></li>
+			</ul>
+			<div id="tabs-1" class="TabContainer" >
+				<div class="header" >
+					<div class="HeaderImgLeft" ></div>
+					<div class="HeaderImgRight" ></div>
+					<div class="HeaderText" >SCS Web Manager</div>
+				</div>
+				<div class="ConnTopItems" >
+					<div id="SCSDoc" ></div>
+				</div>
+				<div class="TabLoadSpinner" >
+					<div class="TabLoadSpinnerCont" >
+						<div class="TabLoadSpinnerMessage" >Loading</div>
+						<div class="TabLoadSpinnerIcon" ></div>
+					</div>
+				</div>
+				<div class="HPSCSInfo" >
+					<table class="HPSCSInfo" >
+						<tr>
+							<th colspan="2" >SCS Server</th>
+						</tr>
+						<tr>
+							<td class="CellLeft" >Server date</td>
+							<td id="HPSCSDate" class="CellRight" ></td>
+						</tr>
+						<tr>
+							<td class="CellLeft" >SCS uptime</td>
+							<td id="HPSCSUptime" class="CellRight" ></td>
+						</tr>
+						<tr>
+							<td class="CellLeft" >View log</td>
+							<td><button id="HPSCSLogDload" style="width: 30px; height: 14px" ></button></td>
+						</tr>
+					</table>
+					<table class="HPSCSInfo" >
+						<tr>
+							<th colspan="2" >SCS Connectors</th>
+						</tr>
+						<tr>
+							<td class="CellLeft" >Installed</td>
+							<td id="HPNumConnInstalled" class="CellRight" ></td>
+						</tr>
+						<tr>
+							<td class="CellLeft" >Configured</td>
+							<td id="HPNumConnConfigured" class="CellRight" ></td>
+						</tr>
+					</table>
+					<table class="HPSCSInfo" >
+						<tr>
+							<th colspan="2" >SCS Connectors capabilities</th>
+						</tr>
+						<tr>
+							<td class="CellLeft" >SAML authentication</td>
+							<td id="HPSamlAuthNConnectorsCount" class="CellRight" ></td>
+						</tr>
+						<tr>
+							<td class="CellLeft" >SAML authorization</td>
+							<td id="HPSamlAuthZConnectorsCount" class="CellRight" ></td>
+						</tr>
+						<tr>
+							<td class="CellLeft" >Cookie Cracking</td>
+							<td id="HPCookieCrackerConnectorsCount" class="CellRight" ></td>
+						</tr>
+						<tr>
+							<td class="CellLeft" >Group Retrieval</td>
+							<td id="HPCMGrRetrCount" class="CellRight" ></td>
+						</tr>
+						<tr>
+							<td class="CellLeft" >Name mapping</td>
+							<td id="HPNameTransformersCount" class="CellRight" ></td>
+						</tr>
+						<tr>
+							<td class="CellLeft" >Feeding</td>
+							<td id="HPIndexersCount" class="CellRight" ></td>
+						</tr>
+					</table>
+					<table class="HPSCSInfo" >
+						<tr>
+							<th colspan="3" >SCS Endpoints</th>
+						</tr>
+						<tr>
+							<td colspan="3" >
+								<span><label for="HPHttpEndpoints" >HTTP</label><input type="radio" class="HPEndpoints" name="HPEndpoints" id="HPHttpEndpoints" value="http" /></span>
+								<span><label for="HPHttpsEndpoints" >HTTPS</label><input type="radio" class="HPEndpoints" name="HPEndpoints" id="HPHttpsEndpoints" value="https" /></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="CellLeft" >SAML IdP authentication</td>
+							<td id="HPSamlAuthNHttpEndpoint" class="CellRight HPHttpEndpoints" ></td>
+							<td id="HPSamlAuthNHttpsEndpoint" class="CellRight HPHttpsEndpoints" ></td>
+						</tr>
+						<tr>
+							<td class="CellLeft" >SAML IdP responder</td>
+							<td id="HPSamlAuthNResponderHttpEndpoint" class="CellRight HPHttpEndpoints" ></td>
+							<td id="HPSamlAuthNResponderHttpsEndpoint" class="CellRight HPHttpsEndpoints" ></td>
+						</tr>
+						<tr>
+							<td class="CellLeft" >SAML Authorization</td>
+							<td id="HPSamlAuthZHttpEndpoint" class="CellRight HPHttpEndpoints" ></td>
+							<td id="HPSamlAuthZHttpsEndpoint" class="CellRight HPHttpsEndpoints" ></td>
+						</tr>
+						<tr>
+							<td class="CellLeft" >Cookie-cracking</td>
+							<td id="HPCookieHttpEndpoint" class="CellRight HPHttpEndpoints" ></td>
+							<td id="HPCookieHttpsEndpoint" class="CellRight HPHttpsEndpoints" ></td>
+						</tr>
+						<tr>
+							<td class="CellLeft" >Connector Manager</td>
+							<td id="HPConnMgrHttpEndpoint" class="CellRight HPHttpEndpoints" ></td>
+							<td id="HPConnMgrHttpsEndpoint" class="CellRight HPHttpsEndpoints" ></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div id="tabs-2" class="TabContainer" >
+				<div class="header" >
+					<div class="HeaderImgLeft" ></div>
+					<div class="HeaderImgRight" ></div>
+					<div class="HeaderText" >GSA</div>
+				</div>
+				<div class="TabLoadSpinner" >
+					<div class="TabLoadSpinnerCont" >
+						<div class="TabLoadSpinnerMessage" >Loading</div>
+						<div class="TabLoadSpinnerIcon" ></div>
+					</div>
+				</div>
+				<div id="GSAMenuRegGSA" >
+					<div class="cpline" >
+						<div class="pn" ><label for="GSAMenuRegGSAInputDef">Register a GSA&nbsp;&nbsp;&nbsp;- default host: </label></div>
+						<div class="pv resizable" ><input id="GSAMenuRegGSAInputDef" name="GSAMenuRegGSAInputDef" type="text" value="" placeholder="mygsa.mydomain.com" ></div>
+					</div>
+					<div class="cpline" >
+						<div class="pn" ><label for="GSAMenuRegGSAInputAdm">Admin NIC host (if enabled): </label></div>
+						<div class="pv resizable" ><input id="GSAMenuRegGSAInputAdm" name="GSAMenuRegGSAInputAdm" type="text" value="" placeholder="mygsa.mydomain.com" ></div>
+					</div>
+					<div class="cpline" >
+						<div class="pn" ><label for="GSAMenuRegGSAInputSSL">SSL connection to GSA: </label></div>
+						<div class="pv" ><input id="GSAMenuRegGSAInputSSL" name="GSAMenuRegGSAInputSSL" type="checkbox" value="on" ></div>
+					</div>
+					<div class="cpline" >
+						<div class="pn" >&nbsp;</div>
+						<div class="pv" ><button id="GSAMenuRegGSABtn" style="width: 30px; height: 14px" ></button></div>
+					</div>
+				</div>
+				
+				<div id="GSAMenuUploadFTP" >
+					<div class="cpline" >
+						<div class="pn" ><label for="GSAMenuUploadFTPNoGSA">Do not directly connect to a GSA ? </label></div>
+						<div class="pv" ><input id="GSAMenuUploadFTPNoGSA" name="GSAMenuUploadFTPNoGSA" type="checkbox" value="on" ></div>
+					</div>
+					<div class="cpline" >
+						<div class="pn" ><label for="GSAMenuUploadFTPHost">Register an FTP host to upload feeds to: </label></div>
+						<div class="pv resizable" ><input id="GSAMenuUploadFTPHost" name="GSAMenuUploadFTPHost" type="text" value="" placeholder="localhost" ></div>
+					</div>
+					
+					<div class="cpline" >
+						<div class="pn" ><label for="GSAMenuUploadFTPUsername">FTP Username</label></div>
+						<div class="pv resizable" ><input id="GSAMenuUploadFTPUsername" name="GSAMenuUploadFTPUsername" type="text" value="" ></div>
+					</div>
+					
+					<div class="cpline" >
+						<div class="pn" ><label for="GSAMenuUploadFTPPassword">Password</label></div>
+						<div class="pv resizable" ><input id="GSAMenuUploadFTPPassword" name="GSAMenuUploadFTPPassword" type="text" value="" ></div>
+					</div>
+
+					<div class="cpline" >
+						<div class="pn" >&nbsp;</div>
+						<div class="pv" ><button id="GSAMenuUploadFTPBtn" style="width: 30px; height: 14px" ></button></div>
+					</div>
+				</div>
+				<div id="GSAMenuPickCert" >
+					<div id="GSAMenuPickCertMessage" >GSA answered with an untrusted certificate chain. Please select the certificate that the SCS should trust from the chain below:</div>
+					<div id="GSAMenuPickCertChainContainer" >
+					</div>
+					<div class="cpline" >
+						<div class="pn" >&nbsp;</div>
+						<div class="pv" ><button class="GSAMenuCommonsBtnCancel" >Cancel</button></div>
+					</div>
+				</div>
+				<div id="GSAMenuConfirmGSA" >
+					<div id="GSAMenuConfirmGsaMessage" >You are about to register the GSA below. Please review the information and confirm:</div>
+					<div class="cpline" >
+						<div class="pn" >&nbsp;</div>
+						<div class="pv" >
+							<table>
+								<tr>
+									<td class="CellLeft" >GSA default Hostname: </td>
+									<td class="GSAMenuConfirmGsaDefHost CellRight" ></td>
+								</tr>
+								<tr>
+									<td class="CellLeft" >GSA admin NIC Hostname: </td>
+									<td class="GSAMenuConfirmGsaAdmHost CellRight" ></td>
+								</tr>
+								<tr>
+									<td class="CellLeft" >SSL connection to GSA: </td>
+									<td class="GSAMenuConfirmGsaSSL CellRight" ></td>
+								</tr>
+								<tr>
+									<td class="CellLeft" >Appliance ID: </td>
+									<td class="GSAMenuConfirmGsaLicID CellRight" ></td>
+								</tr>
+								<tr>
+									<td class="CellLeft" >System version: </td>
+									<td class="GSAMenuConfirmGsaSys CellRight" ></td>
+								</tr>
+								<tr>
+									<td class="CellLeft" >Software version: </td>
+									<td class="GSAMenuConfirmGsaSoft CellRight" ></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<!--div class="cpline" >
+						<div class="pn tooltipped" >Register a Connector Manager: </div>
+						<div class="pv" ><input name="GSAMenuConfirmRegCM" type="checkbox" value="yes" /></div>
+						<div class="tooltipval" >Indicates whether the SCS should be registered as a Connector Manager in the GSA</div>
+					</div>
+					<div class="cpline" >
+						<div class="pn tooltipped" >Ensure feedergate access: </div>
+						<div class="pv" ><input name="GSAMenuConfirmEnsureFeedergate" type="checkbox" value="yes" /></div>
+						<div class="tooltipval" >Indicates whether the SCS IP address should be added to the list of trusted IP addresses in order to allow teh SCS to send feeds to the GSA</div>
+					</div-->
+					<div class="cpline" >
+						<div class="pn" >&nbsp;</div>
+						<div class="pv" ><button class="GSAMenuCommonsBtnConfirm" >Register GSA</button></div>
+					</div>
+					<div class="cpline" >
+						<div class="pn" >&nbsp;</div>
+						<div class="pv" ><button class="GSAMenuCommonsBtnCancel" >Cancel</button></div>
+					</div>
+				</div>
+				<div id="GSAMenuGSAInfo" >
+					<form>
+						<fieldset class="MgrConfSection" >
+							<legend>Information</legend>
+							<div class="cpline" >
+								<div class="pn" >GSA default Hostname: </div>
+								<div class="pv resizable" ><input name="GSAMenuInfoGsaDefHost" type="text" value="" readonly /></div>
+							</div>
+							<div class="cpline" >
+								<div class="pn" >GSA admin NIC Hostname: </div>
+								<div class="pv resizable" ><input name="GSAMenuInfoGsaAdmHost" type="text" value="" readonly /></div>
+							</div>
+							<div class="cpline" >
+								<div class="pn" >SSL connection to GSA: </div>
+								<div class="pv" ><input name="GSAMenuInfoGsaSSL" type="checkbox" value="true"  onclick="return false" /></div>
+							</div>
+							<div class="cpline" >
+								<div class="pn" >Appliance ID: </div>
+								<div class="pv resizable" ><input name="GSAMenuInfoID" type="text" value="" readonly /></div>
+							</div>
+							<div class="cpline" >
+								<div class="pn" >System version: </div>
+								<div class="pv resizable" ><input name="GSAMenuInfoSys" type="text" value="" readonly /></div>
+							</div>
+							<div class="cpline" >
+								<div class="pn" >Software version: </div>
+								<div class="pv resizable" ><input name="GSAMenuInfoSoft" type="text" value="" readonly /></div>
+							</div>
+						</fieldset>
+						<fieldset class="MgrConfSection" >
+							<legend>Configuration</legend>
+							<div class="cpline" >
+								<div class="pn" >&nbsp;</div>
+								<div class="pv" ><span id="GSAMenuACCConnectionInfo" ></span></div>
+							</div>
+							<div class="cpline" >
+								<div class="pn" >&nbsp;</div>
+								<div class="pv" >
+									<table>
+										<tr>
+											<td class="tooltipped CellLeft" >Connectivity to GSA admin console: </td>
+											<td class="CellRight" colspan="2" ><span id="GSAMenuACConnectivity" class="ui-icon ui-icon-help" >&nbsp;</span></td>
+											<td class="tooltipval" >Indicates whether the configured GSA could be reached on port 8443</td>
+										</tr>
+										<tr>
+											<td class="tooltipped CellLeft" >Authentication to GSA admin console: </td>
+											<td class="CellRight" colspan="2" ><span id="GSAMenuACAuthn" class="ui-icon ui-icon-help" >&nbsp;</span></td>
+											<td class="tooltipval" >Indicates whether authentication against the GSA was successful. If it was not, make sure to authenticate with a GSA account - not the local SCS administrator.</td>
+										</tr>
+										<tr>
+											<td class="tooltipped CellLeft" >Feedergate access: </td>
+											<td class="CellRight" ><span id="GSAMenuACFeedergateAccess" >Unknown</span></td>
+											<td class="CellRight" ><span id="GSAMenuACFeedergateAccessGrant" class="GSAMenuACBtn" ><button>Grant</button></span></td>
+											<td class="tooltipval" >Indicates whether IP restrictions from the GSA Feeds configuration allow feeds to be sent from this machine</td>
+										</tr>
+										<tr>
+											<td class="tooltipped CellLeft" >Connector Manager: </td>
+											<td class="CellRight" ><span id="GSAMenuACRegAsCM" >Unknown</span></td>
+											<td class="CellRight" ><span id="GSAMenuACDoRegAsCM" class="GSAMenuACBtn" ><button>Register</button></span></td>
+											<td class="tooltipval" >Indicates whether the SCS is registered as a Connector Manager in the GSA</td>
+										</tr>
+										<tr>
+											<td class="tooltipped CellLeft" >Indexers URL Patterns: </td>
+											<td class="CellRight" ><span id="GSAMenuACURLPattern" >Unknown</span></td>
+											<td class="CellRight" ><span id="GSAMenuACURLPatternAdd" class="GSAMenuACBtn" ><button>Add</button></span></td>
+											<td class="tooltipval" >Indicates whether the SCS indexers URLs are present in the list of authorized URL patterns in the GSA</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</fieldset>
+					</form>
+					<div class="cpline" >
+						<div class="pn" >&nbsp;</div>
+						<div class="pv" ><button id="GSAMenuInfoRemoveGSA" >Delete</button></div>
+					</div>
+				</div>
+			</div>
+			<div id="tabs-3" class="TabContainer" >
+				<div class="header" >
+					<div class="HeaderImgLeft" ></div>
+					<div class="HeaderImgRight" ></div>
+					<div class="HeaderText" >Connector List</div>
+				</div>
+				<div class="TabLoadSpinner" >
+					<div class="TabLoadSpinnerCont" >
+						<div class="TabLoadSpinnerMessage" >Loading</div>
+						<div class="TabLoadSpinnerIcon" ></div>
+					</div>
+				</div>
+				<div style="text-align: center; padding-bottom: 12px" >
+					<span><button id="AddConn" >Add Connector</button></span>
+				</div>
+			</div>
+			
+			<div id="tabs-4" class="TabContainer" >
+				<div class="header" >
+					<div class="HeaderImgLeft" ></div>
+					<div class="HeaderImgRight" ></div>
+					<div class="HeaderText" >Cloud Sources List</div>
+				</div>
+				<!-- <form>
+				<fieldset class="MgrConfSection" >
+				<legend>Information</legend>
+				<div id="SBMenuRegister" >
+					<div class="cpline" >
+						<div class="pn" ><label for="SBMenuCustIdInput">Customer ID: </label></div>
+						<div class="pv resizable" ><input id="SBMenuCustIdInputVal" name="SBMenuCustIdInput" type="text" value="" placeholder="8 chars" ></div>
+					</div>
+					<div class="cpline" >
+						<div class="pn" ><label for="SBMenuSourceIdInput">Source ID: </label></div>
+						<div class="pv resizable" ><input id="SBMenuSourceIdInputVal" name="SBMenuSourceIdInput" type="text" value="" placeholder="11 chars" ></div>
+					</div>
+					<div class="cpline" >
+						<div class="pn" ><label for="SBMenuSourceNameInput">Source name: </label></div>
+						<div class="pv resizable" ><input id="SBMenuSourceNameInputVal" name="SBMenuSourceNameInput" type="text" value="" placeholder="Make sure it matches the source ID within Cloud Search" ></div>
+					</div>
+					<div class="cpline" >
+						<div class="pn" ><label for="SBMenuSourceFileInput">Service Account File: </label></div>
+						<div class="pv" ><input type='file' id="SBMenuSourceIdInputFile" name='SBMenuSourceFileInput'></div>
+					</div>
+					<div class="cpline" >
+						<div class="pn" ><label for="SBMenuSourceNameInput">Service Account Contents: </label></div>
+						<div class="pv" ><textarea name="Text1" cols="40" rows="5" placeholder="Copy the ENTIRE contents of ServiceAccountKey.json here" id="SBMenuServiceKeyVal"></textarea></div>
+					</div>
+					<div class="cpline" >
+						<div class="pn" >&nbsp;</div>
+						<div class="pv" ><button id="SBRegisterBtn" style="width: 30px; height: 14px" ></button></div>
+					</div>
+					
+				</div>
+				</fieldset>
+				</form> -->
+				<div style="text-align: center; padding-bottom: 12px">
+					<span><button id="AddCloudSource" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-secondary" role="button" aria-disabled="false"><span class="ui-button-text">Add Cloud Source</span><span class="ui-button-icon-secondary ui-icon ui-icon-plusthick"></span></button></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="footer" class="tac" >
+		<div class="copy" >Copyright &copy; 2013 Sword Group. All Rights Reserved.</div>
+	</div>
+	<div style="display: none" id="ES_" >
+		<!-- Logged-in account -->
+		<div id="ES_LoggedInAccount" >
+			<div id="AccountInfo" ><span id="AccountInfoImg" ></span></div>
+			<div id="AccountInfoDetails" >
+				<div id="AccountInfoArrow" ></div>
+				<div id="AccountInfoName" ></div>
+				<div id="AccountInfoRole" ></div>
+				<div id="AccountInfoSwitch" ><button>Switch account</button></div>
+			</div>
+		</div>
+	
+	
+		<!-- GSA Registration elements -->
+		<div id="ES_GsaReg" >
+			<div id="ES_GsaRegCertSummary" >
+				<div class="cpline GSAMenuCertSummary" >
+					<div class="pn" ></div>
+					<div class="pv" ><span><button class="GSAMenuViewCertDetails" >View Details</button></span><span><button class="GSAMenuCommonsBtnConfirm" >Trust certificate</button></span></div>
+				</div>
+			</div>
+			<div id="ES_GsaRegCertDetails" >
+				<div class="GSAMenuCertDetails" >
+					<div class="contents" >
+						<div class="buttons" >
+							<button class="GSAMenuCertDetailsConfirm GSAMenuCommonsBtnConfirm" >Trust certificate</button>
+							<button class="GSAMenuCertDetailsClose" >Close</button>
+						</div>
+						<table class="GSAMenuCertValue" >
+							<tr>
+								<td colspan="2" class="GSAMenuCertTit" >Issued To</td>
+							</tr>
+							<tr>
+								<td class="CellLeft" style="width: 120px" >DN: </td>
+								<td class="GSAMenuPickCertSubject CellRight GSAMenuCertValue" ></td>
+							</tr>
+							<tr>
+								<td class="CellLeft" >Serial number: </td>
+								<td class="GSAMenuPickCertSN CellRight GSAMenuCertValue" ></td>
+							</tr>
+							<tr>
+								<td colspan="2" class="GSAMenuCertTit" >Issued By</td>
+							</tr>
+							<tr>
+								<td class="CellLeft" >DN: </td>
+								<td class="GSAMenuPickCertIssuer CellRight GSAMenuCertValue" ></td>
+							</tr>
+							<tr>
+								<td colspan="2" class="GSAMenuCertTit" >Period of Validity</td>
+							</tr>
+							<tr>
+								<td class="CellLeft" >From: </td>
+								<td class="GSAMenuPickCertValFrom CellRight GSAMenuCertValue" ></td>
+							</tr>
+							<tr>
+								<td class="CellLeft" >To: </td>
+								<td class="GSAMenuPickCertValTo CellRight GSAMenuCertValue" ></td>
+							</tr>
+							<tr>
+								<td colspan="2" class="GSAMenuCertTit" >Fingerprints</td>
+							</tr>
+							<tr>
+								<td class="CellLeft" >SHA-256: </td>
+								<td class="GSAMenuPickCertFPSHA256 CellRight GSAMenuCertValue" ></td>
+							</tr>
+							<tr>
+								<td class="CellLeft" >SHA1: </td>
+								<td class="GSAMenuPickCertFPSHA1 CellRight GSAMenuCertValue" ></td>
+							</tr>
+							<tr>
+								<td colspan="2" class="GSAMenuCertTit" >Miscellaneous</td>
+							</tr>
+							<tr>
+								<td class="CellLeft" >Version: </td>
+								<td class="GSAMenuPickCertVersion CellRight GSAMenuCertValue" ></td>
+							</tr>
+							<tr>
+								<td class="CellLeft" >Public key: </td>
+								<td class="GSAMenuPickCertPubKey CellRight GSAMenuCertValue" ></td>
+							</tr>
+							<tr>
+								<td class="CellLeft" >Signature algorithm: </td>
+								<td class="GSAMenuPickCertSigalg CellRight GSAMenuCertValue" ></td>
+							</tr>
+							<tr>
+								<td class="CellLeft" >Signature: </td>
+								<td class="GSAMenuPickCertSig CellRight GSAMenuCertValue" ></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<div id="ES_CloudAddTab" >
+		<div class="header" >
+					<div class="HeaderImgLeft" ></div>
+					<div class="HeaderImgRight" ></div>
+					<div class="HeaderText" >Add Cloud Source</div>
+				</div>
+		<fieldset class="MgrConfSection" >
+				<legend>Information</legend>
+				<div id="SBMenuRegister" >
+					<div class="cpline" >
+						<div class="pn" ><label for="SBMenuCustIdInput">Customer ID: </label></div>
+						<div class="pv resizable" ><input id="SBMenuCustIdInputVal" name="SBMenuCustIdInput" type="text" value="" placeholder="8 chars" ></div>
+					</div>
+					<div class="cpline" >
+						<div class="pn" ><label for="SBMenuSourceIdInput">Source ID: </label></div>
+						<div class="pv resizable" ><input id="SBMenuSourceIdInputVal" name="SBMenuSourceIdInput" type="text" value="" placeholder="11 chars" ></div>
+					</div>
+					<div class="cpline" >
+						<div class="pn" ><label for="SBMenuSourceNameInput">Source name: </label></div>
+						<div class="pv resizable" ><input id="SBMenuSourceNameInputVal" name="SBMenuSourceNameInput" type="text" value="" placeholder="Make sure it matches the source ID within Cloud Search" ></div>
+					</div>
+					<div class="cpline" >
+						<div class="pn" ><label for="SBMenuSourceFileInput">Service Account File: </label></div>
+						<div class="pv" ><input type='file' id="SBMenuSourceIdInputFile" name='SBMenuSourceFileInput'></div>
+					</div>
+					<div class="cpline" >
+						<div class="pn" ><label for="SBMenuSourceNameInput">Service Account Contents: </label></div>
+						<div class="pv" ><textarea name="Text1" cols="40" rows="5" placeholder="Copy the ENTIRE contents of ServiceAccountKey.json here" id="SBMenuServiceKeyVal"></textarea></div>
+					</div>
+					<div class="cpline" >
+						<div class="pn" >&nbsp;</div>
+						<div class="pv" ><button id="SBRegisterBtn" style="width: 30px; height: 14px" ></button></div>
+					</div>
+					
+				</div>
+		</fieldset>
+		</div>
+	
+		<!-- Connectors tab elements -->
+		<div id="ES_ConTab" >
+			<div id="ES_ConTabConLink" >
+				<div class="clink" >
+					<div class="cinfo" >
+						<span class="cninfo" ></span>
+						<span class="cvinfo" ></span>
+					</div>
+					<div class="cbuttons" >
+						<button class="cbedit" >Configure</button>
+						<button class="cbmon" >Monitor</button>
+						<button class="cbdel" >Delete</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	
+		<!-- Connectors creation tab elements -->
+		<div id="ES_ConCreateTab" >
+			<div class="cpline" >
+				<div class="pn" ><label for="ct">Connector type: </label></div>
+				<div class="pv" >
+					<select name="ct" class="ACType" >
+						<option value="notaconnector" > </option>
+					</select>
+				</div>
+			</div>
+			<div class="cpline" >
+				<div class="pn" > </div>
+				<div class="pv" ><button class="CancelAdd" >Cancel</button></div>
+			</div>
+		</div>
+	
+	
+		<!-- Connectors edition tab elements -->
+		<div id="ES_ConEditTab" >
+			<div class="header" >
+				<div class="HeaderImgLeft" ></div>
+				<div class="HeaderImgRight" ></div>
+				<div class="HeaderText" >Configuring connector</div>
+			</div>
+			<div class="TabLoadSpinner" >
+				<div class="TabLoadSpinnerCont" >
+					<div class="TabLoadSpinnerMessage" >Loading</div>
+					<div class="TabLoadSpinnerIcon" ></div>
+				</div>
+			</div>
+			<form action="/SCS/secure/restconf/connector/config" method="post" enctype="multipart/form-data" class="ConnectorConfForm" style="clear: both" >
+				<input name="class" type="hidden" value="" >
+				<fieldset class="ConnectorDef MgrConfSection" >
+					<legend>Connector definition</legend>
+					<div class="ConnTopItems" >
+						<div>
+							<table>
+								<tr>
+									<td class="ConnDoc" colspan="2" ></td>
+								</tr>
+								<tr>
+									<td><span class="ui-icon ui-icon-flag" style="display: inline-block" ></span>: </td>
+									<td style="text-align: left" >mandatory parameter</td>
+								</tr>
+								<tr>
+									<td><span class="ui-icon ui-icon-locked" style="display: inline-block" ></span>: </td>
+									<td style="text-align: left" >read-only parameter</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="cpline" >
+						<div class="IdAnchor" ></div>
+						<div class="pn tooltipped" tooltipped="" >
+							<label for="cid" >Connector ID: </label>
+						</div>
+						<div class="pv resizable" >
+							<input name="cid" type="text" value="" >
+						</div>
+						<span class="ui-icon ui-icon-locked unmodifiableid" ></span>
+						<div class="tooltipval" >Unique ID for the connector</div>
+					</div>
+					<div class="cpline" >
+						<div class="pn tooltipped" tooltipped="" >Usage: </div>
+						<div class="pv" >
+							<label style="padding-left: 24px" for="UseForAuthN" >Authentication: </label>
+							<input class="UseForAuthN" name="UseForAuthN" type="checkbox" value="on" >
+							<label style="padding-left: 24px" for="UseForGR" >Group retrieval: </label>
+							<input name="UseForGR" type="checkbox" value="on" >
+							<label style="padding-left: 24px" for="UseForPush" >Indexing: </label>
+							<input name="UseForPush" type="checkbox" value="on" >
+						</div>
+						<div class="tooltipval" >Defines what this connector will be used for. Only one connector can be configured for authentication. There can be as many group retrievers as necessary.</div>
+					</div>
+					<div class="cpline" >
+						<div class="pn tooltipped" tooltipped="" >
+							<label for="ns" >Namespace: </label>
+						</div>
+						<div class="pv resizable" >
+							<input name="ns" type="text" value="" >
+						</div>
+						<div class="tooltipval" >Namespace to use for user/group names. Namespaces allow disambiguation for ACEs with the same name but originating from different systems e.g.: many systems contain a group named &quot;Administrators&quot; which is likely to contain different users.</div>
+					</div>
+				</fieldset>
+				<fieldset class="ConnectorParams MgrConfSection" >
+					<legend>Connector parameters</legend>
+				</fieldset>
+			</form>
+		</div>
+	
+	
+		<!-- Connectors edition tab name transformers -->
+		<div id="ES_ConEditTabNameTransformers" >
+			<div class="cpline" >
+				<div class="pn" >
+					<label for="nameTransformer">Name Transformer: </label>
+				</div>
+				<div class="pv resizable" >
+					<select name="nameTransformer" >
+						<option value="notaconnector" > </option>
+					</select>
+				</div>
+			</div>
+		</div>
+	
+	
+		<!-- Connectors edition tab group retriever -->
+		<div id="ES_ConEditTabGR" >
+			<fieldset class="GRCacheConfig MgrConfSection" >
+				<legend>Group retrieval</legend>
+				<div class="cpline" >
+					<div class="pn tooltipped" tooltipped="" >
+						<label></label>
+					</div>
+					<div class="pv resizable" >
+						<input name="CachableGroupRetrieverName" type="text" value="" >
+					</div>
+					<div class="tooltipval" ></div>
+				</div>
+			</fieldset>
+		</div>
+	
+	
+		<!-- Connectors edition tab indexing interval -->
+		<div id="ES_ConEditTabIndexInterval" >
+			<div class="cpline" >
+				<div class="pn tooltipped" tooltipped="" >Idle time:</div>
+				<div class="pv" ><input name="interval" type="text" value="" style="color: black; width: 40px" ><span> hour(s)</span></div>
+				<div class="tooltipval" >When traversal completes, this setting determines how long the connector will wait before it starts traversing the repository again (expressed in hours).</div>
+			</div>
+			<div class="cpline" >
+				<div class="pn tooltipped" tooltipped="" >Maximum throughput:</div>
+				<div class="pv" ><input name="throughput" type="text" value="" style="color: black; width: 40px" ><span> kB/S</span></div>
+				<div class="tooltipval" >Determines the traversal rate (in kB/S). Values lower than, or equal to zero will set an infinite traversal rate.</div>
+			</div>
+		</div>
+	
+	
+		<!-- Connectors edition tab indexing schedule -->
+		<div id="ES_ConEditTabIndexSchedule0" >
+			<div class="cpline ExclPerLine" >
+				<div class="pn tooltipped" tooltipped="" >Do not index:</div>
+				<div class="pv ExclPer" ></div>
+				<div class="tooltipval" >Prevents the indexer from connecting to the source system during certain periods of time.</div>
+			</div>
+		</div>
+		<div id="ES_ConEditTabIndexScheduleX" >
+			<div class="cpline ExclPerLine" >
+				<div class="pn" ></div>
+				<div class="pv ExclPer" ></div>
+			</div>
+		</div>
+		<div id="ES_ConEditTabIndexScheduleValues" >
+			<span class="EPDays" >
+				<label>On: </label>
+				<select class="ExclPerDays" name="ExclPerDays" >
+					<option value="-3" >Never</option>
+					<option value="1" >Sundays</option>
+					<option value="2" >Mondays</option>
+					<option value="3" >Tuesdays</option>
+					<option value="4" >Wednesdays</option>
+					<option value="5" >Thursdays</option>
+					<option value="6" >Fridays</option>
+					<option value="7" >Saturdays</option>
+					<option value="-2" >Week days</option>
+					<option value="-1" >All days</option>
+				</select>
+			</span>
+			<span class="EPStart" >
+				<label>From: </label>
+				<select class="ExclPerFrom" name="ExclPerFrom" >
+					<option value="0" >12 AM</option>
+					<option value="1" >1 AM</option>
+					<option value="2" >2 AM</option>
+					<option value="3" >3 AM</option>
+					<option value="4" >4 AM</option>
+					<option value="5" >5 AM</option>
+					<option value="6" >6 AM</option>
+					<option value="7" >7 AM</option>
+					<option value="8" >8 AM</option>
+					<option value="9" >9 AM</option>
+					<option value="10" >10 AM</option>
+					<option value="11" >11 AM</option>
+					<option value="12" >12 noon</option>
+					<option value="13" >1 PM</option>
+					<option value="14" >2 PM</option>
+					<option value="15" >3 PM</option>
+					<option value="16" >4 PM</option>
+					<option value="17" >5 PM</option>
+					<option value="18" >6 PM</option>
+					<option value="19" >7 PM</option>
+					<option value="20" >8 PM</option>
+					<option value="21" >9 PM</option>
+					<option value="22" >10 PM</option>
+					<option value="23" >11 PM</option>
+				</select>
+			</span>
+			<span class="EPDuration" >
+				<label>For: </label>
+				<input class="ExclPerFor" name="ExclPerFor" type="text" value="" style="color: black; width: 40px" ><span> hour(s)</span>
+			</span>
+		</div>
+	
+	
+		<!-- Internal DB browsing page elements -->
+		<div id="ES_DBBFilters" >
+			<table>
+				<tr>
+					<td class="DBBSearchLbl" >Search child: </td>
+					<td colspan="2" ><input class="DBBSearchInput" type="text" name="DBBSearchInput" value="" placeholder="&lt;enter child ID&gt;" ></td>
+					<td><span class="DBBFiltersBtn DBBSearchBtn" ></span></td>
+				</tr>
+				<tr>
+					<td rowspan="2" class="DBBStateFilterLbl" >Filter by state: </td>
+					<td><span class="ui-icon ui-icon-ib ui-icon-green ui-icon-check"></span><label><input type="checkbox" name="DBBStateFilterState" value="2">: Complete</label></td>
+					<td><span class="ui-icon ui-icon-ib ui-icon-clock"></span><label><input type="checkbox" name="DBBStateFilterState" value="3">: Pending</label></td>
+					<td rowspan="2" ><span class="DBBFiltersBtn DBBStateFilterBtn" ></span></td>
+				</tr>
+				<tr>
+					<td><span class="ui-icon ui-icon-ib ui-icon-red ui-icon-closethick"></span><label><input type="checkbox" name="DBBStateFilterState" value="1">: Excluded</label></td>
+					<td><span class="ui-icon ui-icon-ib ui-icon-red ui-icon-notice"></span><label><input type="checkbox" name="DBBStateFilterState" value="4">: Error</label></td>
+				</tr>
+			</table>
+		</div>
+		
+		
+		<!-- Indexer dashboard elements -->
+		<div id="ES_IndexerDashboardBase" >
+			<div class="header" >
+				<div class="HeaderImgLeft" ></div>
+				<div class="HeaderImgRight" ></div>
+				<div class="HeaderText" >Monitoring connector</div>
+			</div>
+			<div class="TabLoadSpinner" >
+				<div class="TabLoadSpinnerCont" >
+					<div class="TabLoadSpinnerMessage" >Loading</div>
+					<div class="TabLoadSpinnerIcon" ></div>
+				</div>
+			</div>
+			<div class="ConnectorDashboard" >
+				<div class="GroupCacheState subsection" ></div>
+				<div class="IndexerState subsection" ></div>
+			</div>
+		</div>
+		<div id="ES_IndexerDashboardGCState" >
+			<div class="GroupCacheStateTitle ConnectorMgtSubsectionTit" >Cache loader status:</div>
+			<div class="GroupCacheStateContents ConnectorMgtSubsectionContents" >
+				<table>
+					<tr>
+						<td class="CacheStateCell" >Cache age: </td>
+						<td class="CacheAgeVal" ></td>
+						<td rowspan="2" class="CacheStateCell" style="padding-left: 12px" ><button class="ReloadCache" >Discard current cache and load new</button></td>
+						<td rowspan="2" class="CacheStateCell" style="padding-left: 12px" ><button class="RefreshCacheState" >Refresh information</button></td>
+					</tr>
+					<tr>
+						<td class="CacheStateCell" >Cache info: </td>
+						<td class="CacheInfoVal" ></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="ES_IndexerDashboardIndexerState" >
+			<div class="IndexerStateTitle ConnectorMgtSubsectionTit" >Indexer status:</div>
+			<div class="IndexerStateContents ConnectorMgtSubsectionContents" ></div>
+		</div>
+		<div id="ES_IndexerDashboardIndexerStateDBBrowsing" >
+			<div class="IDBTopSection" >
+				<table>
+					<tr>
+						<td>Indexer internal state browsing: </td>
+						<td><button class="IDBApplyDBChangesBtn" >Apply DB changes</button></td>
+						<td><button class="IDBStopDBBBtn" >Stop DB browsing</button></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="ES_IndexerDashboardRunningIndexerState" >
+			<div class="IDBTopSection" >
+				<table>
+					<tr>
+						<td>Indexer is running: </td>
+						<td><button class="IDBStopBtn" >Stop</button></td>
+						<td><button class="IDBKillBtn" >Kill</button></td>
+						<td><button class="IDBViewLogBtn" >View Log</button></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="ES_IndexerDashboardStoppedIndexerState" >
+			<div class="IDBTopSection" >
+				<table>
+					<tr>
+						<td>Indexer is stopped</td>
+						<td><button class="IDBStartBtn" >Start</button></td>
+						<td><button class="IDBResetBtn" >Reset</button></td>
+						<td><button class="IDBViewLogBtn" >View Log</button></td>
+						<td><button class="IDBStartDBBBtn" >View Indexing  internal state</button></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="ES_IndexerDashboard" >
+			<div class="IDBSection IDBCurStats" >
+				<div class="IDBSectionTit" ></div>
+				<div class="IDBCurStatsContents IDBSectionContents" >
+					<div class="IDBDates" >
+						<table>
+							<tr>
+								<td rowspan="2" class="IDBTitCell" >Dates</td>
+								<td>Start</td>
+								<td>Completion</td>
+							</tr>
+							<tr>
+								<td class="IDBStartDate" ></td>
+								<td class="IDBEndDate" ></td>
+							</tr>
+						</table>
+					</div>
+					<div class="IDBEvents" >
+						<table>
+							<tr>
+								<td rowspan="2" class="IDBTitCell" >Audit events</td>
+								<td>Processed</td>
+							</tr>
+							<tr>
+								<td class="IDBEventCounts" ></td>
+							</tr>
+						</table>
+					</div>
+					<div class="IDBNodesCounts" >
+						<table>
+							<tr>
+								<td rowspan="2" class="IDBTitCell" >Nodes</td>
+								<td>Explored</td>
+								<td>Excluded</td>
+							</tr>
+							<tr>
+								<td class="IDBNodesExplored" ></td>
+								<td class="IDBNodesExcluded" ></td>
+							</tr>
+						</table>
+					</div>
+					<div class="IDBACLCounts" >
+						<table>
+							<tr>
+								<td rowspan="2" class="IDBTitCell" >ACLs</td>
+								<td>Added to indexing feed</td>
+								<td>Skipped as unmodified</td>
+							</tr>
+							<tr>
+								<td class="IDBAclAddedToFeedForIndexing" ></td>
+								<td class="IDBAclSkippedAsUnmodified" ></td>
+							</tr>
+						</table>
+					</div>
+					<div class="IDBDocsCounts" >
+						<table>
+							<tr>
+								<td rowspan="2" class="IDBTitCell" >Documents</td>
+								<td>Found</td>
+								<td>Added to indexing feed</td>
+								<td>Skipped as unmodified</td>
+								<td>Added to deletion feed</td>
+								<td>Excluded</td>
+							</tr>
+							<tr>
+								<td class="IDBDocumentsFound" ></td>
+								<td class="IDBDocumentsAddedToFeedForIndexing" ></td>
+								<td class="IDBDocumentsSkippedAsUnmodified" ></td>
+								<td class="IDBDocumentsAddedToFeedForDeletion" ></td>
+								<td class="IDBDocumentsExcluded" ></td>
+							</tr>
+						</table>
+					</div>
+					<div class="IDBErrCounts" >
+						<table>
+							<tr>
+								<td rowspan="2" class="IDBTitCell" >Errors</td>
+								<td>Exploration</td>
+								<td>Indexing</td>
+								<td>Indexing process aborted</td>
+							</tr>
+							<tr>
+								<td class="IDBExplorationErrors" ></td>
+								<td class="IDBIndexingErrors" ></td>
+								<td class="IDBIndexingProcessAborted" ></td>
+							</tr>
+						</table>
+					</div>
+					<div class="IDBThroughput" >
+						<table>
+							<tr>
+								<td rowspan="2" class="IDBTitCell" >Contents</td>
+								<td colspan="2" >Added to feed</td>
+								<td colspan="2" >Sent to GSA</td>
+							</tr>
+							<tr>
+								<td class="IDBdownloaded" ></td>
+								<td class="IDBThroughputD" ></td>
+								<td class="IDBuploaded" ></td>
+								<td class="IDBThroughputU" ></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="IDBSection IDBCharts" >
+				<div class="IDBSectionTit" >History:</div>
+				<div class="IDBSectionContents" >
+					<div class="IDBChart IDBDocCountChart" ></div>
+					<div class="IDBChart IDBBytesCountChart" ></div>
+				</div>
+			</div>
+			<div class="IDBSection IDBThreads" >
+				<div class="IDBSectionTit" >Active threads: </div>
+				<div class="IDBSectionContents" ></div>
+			</div>
+		</div>
+		<div id="ES_IndexerDashboardResetAlert1" >
+			<div>
+				<table>
+					<tr>
+						<td rowspan="2" style="vertical-align: middle"><span class="ui-icon ui-icon-red ui-icon-notice" ></span></td>
+						<td>Connector state will be cleared and connector will start indexing from scratch.</td>
+					</tr>
+					<tr>
+						<td style="font-style: italic; font-size: -1; padding-top: 6px" >URLs that have been indexed in the GSA will not be removed from the GSA index because you are connected with the local SCS admin and not with a GSA account.</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="ES_IndexerDashboardResetAlert2" >
+			<div>
+				<table>
+					<tr>
+						<td rowspan="2" style="vertical-align: middle"><span class="ui-icon ui-icon-red ui-icon-notice" ></span></td>
+						<td>Connector state will be cleared and connector will start indexing from scratch.</td>
+					</tr>
+					<tr>
+						<td style="font-style: italic; font-size: -1; padding-top: 6px" >
+							<form>
+								<input type="checkbox" name="ResetGsaDatasource" value="yes" >
+								<label for="ResetGsaDatasource" >Also delete feed datasource associated with this connector (allows deleting all URLs previously indexed by this connector from the GSA index).</label>
+							</form>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+	</div>
+</body>
+</html>

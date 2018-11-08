@@ -1,0 +1,12 @@
+<h1>Logs for connector {{id}}</h1>
+
+
+<md-progress-bar *ngIf="!logs" color="primary" mode="indeterminate"></md-progress-bar>
+<div [innerHTML]="logs"></div>
+
+
+
+ <div class="bottom-buttons">
+
+    <button md-raised-button routerLink="../../monitor/{{id}}">BACK</button>
+ </div>

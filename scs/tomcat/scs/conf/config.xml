@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<config>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<sb cust-id="03ec639k" keyfile="03ec639k_s1333453975_key.json" source-id="s1333453975" source-name="Jive 2"/>
+<connector class="com.sword.gsa.connectors.gapps.youtube.Connector" id="sword-channel" namespace="undefined">
+<cp n="AccessToken" v="ya29.Glt1BIcKRYLOMBaakdIwORAce82GxAv3o52elLDp8cJ7L6g9Psn36IJ5cor5-fEchY5VqY9OFYmhJWKAtAJRn48RXaam5y162QLVcxijp2Rya9qTrIgRVJ-opfp0"/>
+<cp n="Playlists" v=""/>
+<cp n="Application_name" v="YoutubeConnector"/>
+<cp n="channel" v=""/>
+<cp n="ClientSecret" v="AYHfjxgxl4okqBjsGIsmsF69"/>
+<cp n="RefreshToken" v="1/WyzJ4wPC-5r3U8w8Vo2BzPKqiPB7owOGjX3Op8c1IpU"/>
+<cp n="API_Key" v=""/>
+<cp n="ClientId" v="256792137263-2uvshjc2lf78s4t1tnl8sp9f7ka08p9r.apps.googleusercontent.com"/>
+</connector>
+<indexer connector="sword-channel" interval="10800000" throughput="-1"/>
+
+
+
+
+
+
+
+
+<connector class="com.sword.gsa.connectors.jive.Connector" id="xcxcxc" namespace="undefined">
+<cp n="Host" v="xcxcxc"/>
+<cp n="JiveVersion" v="7 or higher"/>
+<cp n="SvcAccount" v="dfdfcxcxcx"/>
+<cp n="RunAsStrategy" v="userid"/>
+<cp n="PlaceFilter" v=""/>
+<cp n="AclFormat" v="email"/>
+<cp n="SpecialPermissionsFile"/>
+<cp n="IsGuestAllowed" v="false"/>
+<cp n="Port" v=""/>
+<cp n="SvcAccountPwd" v="50381c1fff3228b509ab06760facba7d917cb38f6a1f66ce477b9d0503771d7f"/>
+<cp n="DiscussThreadAsOneItem" v="false"/>
+</connector>
+</config>

@@ -1,0 +1,47 @@
+<div class="main-content">
+<md-card class="card">
+  <md-card-header>
+    <md-card-title><span class="flex-aligned-row"><md-icon>home</md-icon><span class="icon-text">SCS Server</span></span></md-card-title>
+  </md-card-header>
+
+  <md-card-content>
+    <md-list>
+       <md-list-item><div class="item_title"> Server date: </div><md-chip-list><md-chip  selected="true" color="accent">{{serverDate | date: 'fullDate'}}</md-chip></md-chip-list></md-list-item>
+       <md-list-item><div class="item_title"> SCS uptime:	</div><md-chip-list><md-chip  selected="true" color="accent">{{uptime}}</md-chip></md-chip-list> </md-list-item>
+  </md-list>
+  </md-card-content>
+  <md-card-actions>
+    <button md-button routerLink="../logs">VIEW LOGS</button>
+  </md-card-actions>
+</md-card>
+<md-card class="card">
+  <md-card-header>
+    <md-card-title><span class="flex-aligned-row"><md-icon>home</md-icon><span class="icon-text">SCS Connectors</span></span></md-card-title>
+  </md-card-header>
+
+  <md-card-content>
+    <md-list>
+       <md-list-item><div class="item_title"> Installed: </div><md-chip-list><md-chip  selected="true" color="accent">{{installed}}</md-chip></md-chip-list></md-list-item>
+       <md-list-item><div class="item_title"> Configured:	</div><md-chip-list><md-chip  selected="true" color="accent">{{configured}}</md-chip></md-chip-list> </md-list-item>
+  </md-list>
+  </md-card-content>
+  <md-card-actions>
+    <button md-button routerLink="../../connectors/list">VIEW LIST</button>
+  </md-card-actions>
+</md-card>
+<md-card class="card">
+  <md-card-header>
+    <md-card-title><span class="flex-aligned-row"><md-icon>home</md-icon><span class="icon-text">Cloud Search Repositories</span></span></md-card-title>
+  </md-card-header>
+
+  <md-card-content>
+    <md-list>
+       <md-list-item><div class="item_title"> Configured:	 </div><md-chip-list><md-chip  selected="true" color="accent">{{cloudsources}}</md-chip></md-chip-list></md-list-item>
+       <md-list-item></md-list-item>
+  </md-list>
+  </md-card-content>
+  <md-card-actions>
+    <button md-button routerLink="../../repositories/list">VIEW LIST</button>
+  </md-card-actions>
+</md-card>
+</div>

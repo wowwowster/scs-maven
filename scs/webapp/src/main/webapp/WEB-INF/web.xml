@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" metadata-complete="true" version="3.1" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee   http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+
+    <listener>
+        <listener-class>com.sword.gsa.spis.scs.commons.SCSContextListener</listener-class>
+    </listener>
+
+    <security-constraint>
+        <display-name>SSLActions</display-name>
+        <web-resource-collection>
+            <web-resource-name>Protected Area</web-resource-name>
+            <url-pattern>/secure/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <context-param>
+        <param-name>License</param-name>
+        <param-value>4caa7399b272900c29826f9b9944ddffaa9656e487c9807024b30d92f14cf9d3ffb58ec87580ca95ce9b6ba14b652438756b8a2a195ade2fdc13a2c581a481342ea50d6e7429fcc1d4a7b1ed6fb1f025gfa04216c4e4b4cc2431909c7486c83e8afe6afc78b98d273eb6c736e0a051498</param-value>
+    </context-param>
+    <context-param>
+        <param-name>AdministrationPassword</param-name>
+        <param-value>cc0dac2b6dd39421402c9eff5c14b627345354cb1d2bdfcf4b54c3b1d15db9a0</param-value>
+    </context-param>
+
+    <servlet>
+        <description>Handles SAML bulk authorization requests</description>
+        <display-name>GAuthZService</display-name>
+        <servlet-name>GAuthZService</servlet-name>
+        <servlet-class>com.sword.gsa.spis.scs.saml.authorization.GlobalAuthZRequest</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GAuthZService</servlet-name>
+        <url-pattern>/authorize/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <description>Handles Redirect Binding request, Kerberos challenges and HTTP POST requests from the connector login page</description>
+        <display-name>GAuthNService</display-name>
+        <servlet-name>GAuthNService</servlet-name>
+        <servlet-class>com.sword.gsa.spis.scs.commons.http.AuthnServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GAuthNService</servlet-name>
+        <url-pattern>/authenticate/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <description>Handles Artifact Binding requests</description>
+        <display-name>Responder</display-name>
+        <servlet-name>Responder</servlet-name>
+        <servlet-class>com.sword.gsa.spis.scs.saml.authent.SAMLResponder</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Responder</servlet-name>
+        <url-pattern>/responder/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <description>Simulates a GSA connector-manager</description>
+        <display-name>CM</display-name>
+        <servlet-name>CM</servlet-name>
+        <servlet-class>com.sword.gsa.spis.scs.connectormanager.Dispatcher</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CM</servlet-name>
+        <url-pattern>/cm/*</url-pattern>
+        <url-pattern>/connector-manager/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <description>Configuration REST API Servlet</description>
+        <display-name>CS</display-name>
+        <servlet-name>CS</servlet-name>
+        <servlet-class>com.sword.gsa.spis.scs.ui.SCSConfigUI</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CS</servlet-name>
+        <url-pattern>/secure/restconf/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <description>Public Conf REST API Servlet</description>
+        <display-name>CSPub</display-name>
+        <servlet-name>CSPub</servlet-name>
+        <servlet-class>com.sword.gsa.spis.scs.ui.SCSPublicConfigUI</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CSPub</servlet-name>
+        <url-pattern>/unsecure/restconf/*</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>welcome.html</welcome-file>
+    </welcome-file-list>
+
+</web-app>

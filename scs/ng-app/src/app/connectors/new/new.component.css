@@ -1,0 +1,48 @@
+h1 {
+  margin-left: 20px;
+}
+.input {
+  width: 600px;
+}
+
+.form-group {
+  margin-top: 5px;
+}
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+form > md-card{
+  margin: 10px;
+}
+
+.form-group md-select {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.bottom-buttons{
+  display: flex;
+padding-top: 30px;
+justify-content: flex-start;
+}
+
+.bottom-buttons button {
+  margin-left: 20px;
+}
+
+.checkbox {
+  margin-left: 5px;
+}
+
+.connector-def {
+  flex-basis: 100%;
+  margin: 0 10px 0 10px;
+}
+.connector-conf {
+  margin: 10px 10px 0 10px;
+  flex-basis: 100%;
+  flex-shrink: 50%;
+}

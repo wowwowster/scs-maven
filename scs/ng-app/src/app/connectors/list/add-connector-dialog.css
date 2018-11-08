@@ -1,0 +1,10 @@
+.connector_selector{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width:200px;
+}
+.mat-dialog-actions{
+  position: absolute;
+  bottom: 24px;
+  left: 0px;
+}

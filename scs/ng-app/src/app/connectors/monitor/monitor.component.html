@@ -1,0 +1,138 @@
+<h1>Monitoring connector {{connectorConf.id}}</h1>
+<md-card >
+  <md-card-header>
+    <div *ngIf="connectorState?.IsStarted">
+     <button md-mini-fab><md-icon>play_arrow</md-icon></button>
+    </div>
+    <div *ngIf="!connectorState?.IsStarted">
+     <button color="warn" md-mini-fab><md-icon>stop</md-icon></button>
+    </div>
+    <md-card-title>Indexer status</md-card-title>
+    <md-card-subtitle *ngIf="connectorState?.IsStarted">Connector is running</md-card-subtitle>
+    <md-card-subtitle *ngIf="!connectorState?.IsStarted">Connector is not running</md-card-subtitle>
+  </md-card-header>
+  <md-card-actions>
+    <button md-button *ngIf="!connectorState?.IsStarted" (click)="startConnector();"><md-icon>play_arrow</md-icon> START</button>
+    <button md-button *ngIf="connectorState?.IsStarted"><md-icon>stop</md-icon> STOP</button>
+    <button md-button><md-icon>refresh</md-icon> RESET</button>
+    <button md-button routerLink="../../logs/{{id}}"><md-icon>view_headline</md-icon> VIEW LOGS</button>
+    <button md-button  routerLink="../../browse/{{id}}" ><md-icon>pageview</md-icon> VIEW INDEXING STATE</button>
+  </md-card-actions>
+</md-card>
+<div class="stat-card-container">
+<md-card class="stat-card" >
+  <md-card-header>
+    <md-icon md-card-avatar>access_time</md-icon>
+    <md-card-title>Dates</md-card-title>
+      </md-card-header>
+    <md-card-content>
+    <md-list>
+      <md-list-item >Started: <h2>{{connectorStats?.StartTime | date: 'short'}}</h2></md-list-item>
+        <md-divider></md-divider>
+        <md-list-item >Finished: <h2>{{connectorStats?.Now | date: 'short'}}</h2></md-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>
+<md-card class="stat-card" >
+  <md-card-header>
+    <md-icon md-card-avatar>group_work</md-icon>
+    <md-card-title>Nodes</md-card-title>
+      </md-card-header>
+    <md-card-content>
+    <md-list>
+      <md-list-item >Explored: <h2>{{connectorStats?.NodesExplored}}</h2></md-list-item>
+        <md-divider></md-divider>
+        <md-list-item >Excluded: <h2>{{connectorStats?.NodesExcluded}}</h2></md-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>
+<md-card class="stat-card" >
+  <md-card-header>
+    <md-icon md-card-avatar>lock</md-icon>
+    <md-card-title>ACLs</md-card-title>
+      </md-card-header>
+    <md-card-content>
+    <md-list>
+      <md-list-item >Added to feed: <h2>{{connectorStats?.AclAddedToFeedForIndexing}}</h2></md-list-item>
+        <md-divider></md-divider>
+        <md-list-item >Skipped as unmodified: <h2>{{connectorStats?.AclSkippedAsUnmodified}}</h2></md-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>
+<md-card class="stat-card" >
+  <md-card-header>
+    <md-icon md-card-avatar>description</md-icon>
+    <md-card-title>Documents</md-card-title>
+      </md-card-header>
+    <md-card-content>
+    <md-list>
+      <md-list-item >Found: <h2>0</h2></md-list-item>
+        <md-divider></md-divider>
+        <md-list-item >Added to indexing feed: <h2>{{connectorStats?.DocumentsAddedToFeedForIndexing}}</h2></md-list-item>
+        <md-divider></md-divider>
+        <md-list-item >Skipped as unmodified: <h2>{{connectorStats?.DocumentsSkippedAsUnmodified}}</h2></md-list-item>
+        <md-divider></md-divider>
+        <md-list-item >Added to deletion feed: <h2>{{connectorStats?.DocumentsAddedToFeedForDeletion}}</h2></md-list-item>
+          <md-divider></md-divider>
+          <md-list-item >Excluded: <h2>{{connectorStats?.DocumentsExcluded}}</h2></md-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>
+<md-card class="stat-card" >
+  <md-card-header>
+    <md-icon md-card-avatar>error</md-icon>
+    <md-card-title>Errors</md-card-title>
+      </md-card-header>
+    <md-card-content>
+    <md-list>
+        <md-divider></md-divider>
+        <md-list-item >Exploration: <h2>{{connectorStats?.ExplorationErrors}}</h2></md-list-item>
+        <md-divider></md-divider>
+        <md-list-item >Indexing: <h2>{{connectorStats?.IndexingErrors}}</h2></md-list-item>
+        <md-divider></md-divider>
+        <md-list-item >Indexing process aborted: <h2>{{connectorStats?.IndexingProcessAborted}}</h2></md-list-item>
+          <md-divider></md-divider>
+          <md-list-item >Excluded: <h2>{{connectorStats?.AclSkippedAsUnmodified}}</h2></md-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>
+<md-card class="stat-card" >
+  <md-card-header>
+    <md-icon md-card-avatar>network_check</md-icon>
+    <md-card-title>Contents</md-card-title>
+      </md-card-header>
+    <md-card-content>
+    <md-list>
+        <md-divider></md-divider>
+        <md-list-item >Added to feed: <h2>{{connectorStats?.ContentBytesAddedToFeedString}}</h2></md-list-item>
+        <md-divider></md-divider>
+        <md-list-item >Sent to Google Cloud: <h2>{{connectorStats?.BytesActuallySentToGsaString}}</h2></md-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>
+<md-card class="chart-card">
+  <md-card-header>
+    <md-icon md-card-avatar>show_chart</md-icon>
+    <md-card-title> Number of documents</md-card-title>
+      </md-card-header>
+    <md-card-content>
+        <canvas  id="chart" width="500" height="400"></canvas >
+    </md-card-content>
+</md-card>
+<md-card class="chart-card">
+  <md-card-header>
+    <md-icon md-card-avatar>show_chart</md-icon>
+    <md-card-title> Throughput</md-card-title>
+      </md-card-header>
+    <md-card-content>
+        <canvas  id="chart_tp" width="500" height="400"></canvas >
+    </md-card-content>
+</md-card>
+</div>
+
+
+
+ <div class="bottom-buttons">
+
+    <button md-raised-button routerLink="../../list">BACK</button>
+ </div>

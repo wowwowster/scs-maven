@@ -1,0 +1,20 @@
+<md-toolbar color="primary" class="toolbar">
+  <span class="flex-aligned-row"><md-icon class="toggle-nav" (click)="sidenav.toggle()">menu</md-icon><span class="icon-text">Sword Connectors Server</span></span>
+
+  <!-- This fills the remaining space of the current row -->
+  <span class="fill-remaining-space"></span>
+
+  <span class="flex-aligned-row"><md-icon>person</md-icon><span class="icon-text">Julien Marchet</span></span>
+</md-toolbar>
+<md-sidenav-container class="container">
+  <md-sidenav #sidenav class="sidenav" mode="side" opened="true">
+    <menu></menu>
+  </md-sidenav>
+
+  <div class="sidenav-content">
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="footer">&copy; Sword Connect 2017</div>
+  </div>
+</md-sidenav-container>

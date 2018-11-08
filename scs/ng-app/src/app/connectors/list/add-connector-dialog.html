@@ -1,0 +1,17 @@
+<div style="color:white;"><h1 md-dialog-title>Add a connector</h1>
+<div md-dialog-content>Select a connector type:</div>
+<div [hidden]="!error">
+    Please select a connector
+    </div>
+<div>
+<md-select required class="connector_selector" placeholder="Select connector" [(ngModel)]="myConnector">
+  <md-option *ngFor="let connector of data" [value]="connector.classname">
+    {{connector.name}} (v{{connector.version}})
+  </md-option>
+</md-select>
+</div>
+<div md-dialog-actions>
+  <button md-button md-dialog-close="OK">OK</button>
+  <button md-button md-dialog-close="Cancel">CANCEL</button>
+</div>
+</div>

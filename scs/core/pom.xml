@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>sword.connect.scs</groupId>
+    <artifactId>core</artifactId>
+    <packaging>jar</packaging>
+    <version>4.0</version>
+    <parent>
+        <artifactId>scs</artifactId>
+        <groupId>sword.connect.scs</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathLayoutType>custom</classpathLayoutType>
+                            <customClasspathLayout>$${artifact.artifactId}.$${artifact.extension}</customClasspathLayout>
+                            <mainClass>com.sword.gsa.spis.scs.push.PushInitializer</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.0-b06</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.opensaml/opensaml -->
+        <dependency>
+            <groupId>org.opensaml</groupId>
+            <artifactId>opensaml</artifactId>
+            <version>2.6.4</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.9.9</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.8.8</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.ws.commons.axiom/axiom-api -->
+        <dependency>
+            <groupId>org.apache.ws.commons.axiom</groupId>
+            <artifactId>axiom-api</artifactId>
+            <version>1.2.20</version>
+        </dependency>
+
+        <dependency>
+            <groupId>sword.connect.api</groupId>
+            <artifactId>sw-static-utils</artifactId>
+            <version>1.4.8</version>
+        </dependency>
+        <dependency>
+            <groupId>sword.connect.api</groupId>
+            <artifactId>sw-connector</artifactId>
+            <version>2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>sword.connect.api</groupId>
+            <artifactId>sw-feed-builder</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>sword.connect.api</groupId>
+            <artifactId>sw-feed-poster</artifactId>
+            <version>3.0.10</version>
+        </dependency>
+        <dependency>
+            <groupId>sword.connect.api</groupId>
+            <artifactId>sw-sql-basics</artifactId>
+            <version>1.6.8</version>
+        </dependency>
+        <dependency>
+            <groupId>sword.connect.api</groupId>
+            <artifactId>gsa-gdata-api</artifactId>
+            <version>2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-springboardindex</artifactId>
+            <version>v1-rev20161115-1.22.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.enterprise.springboard</groupId>
+            <artifactId>common</artifactId>
+            <version>0.3.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.22.0</version>
+        </dependency>
+        <dependency>
+            <groupId>sword.connect.scs</groupId>
+            <artifactId>constants</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>sword.connect.scs</groupId>
+            <artifactId>utils-license-manager</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>sword.connect.scs</groupId>
+            <artifactId>utils-krb5</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>10.13.1.1</version>
+        </dependency>
+
+    </dependencies>
+
+
+</project>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>scs</artifactId>
+        <groupId>sword.connect.scs</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <packaging>war</packaging>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>webapp</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <dependencies>
+    <dependency>
+        <groupId>sword.connect.scs</groupId>
+        <artifactId>core</artifactId>
+        <version>4.0</version>
+    </dependency>
+</dependencies>
+
+    <build>
+        <finalName>SCS</finalName>
+        <plugins>
+            <plugin>
+                <groupId>sword.connect.scs</groupId>
+                <artifactId>licensegenerator-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <executions>
+                <execution>
+                    <phase>install</phase>
+                    <goals>
+                        <goal>generatelicense</goal>
+                    </goals>
+                </execution>
+                </executions>
+                <configuration>
+                    <webxmllocation>${project.basedir}/src/main/webapp/WEB-INF</webxmllocation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>sword.connect.scs</groupId>
+                <artifactId>connector-deployer-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>deployconnectors</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <scshome>${project.basedir}/..</scshome>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <id>exec-ng-install</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <workingDirectory>${project.basedir}/../ng-app</workingDirectory>
+                            <executable>npm.cmd</executable>
+                            <arguments>
+                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>exec-ng-dist</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <workingDirectory>${project.basedir}/../ng-app</workingDirectory>
+                            <executable>npm.cmd</executable>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>ng</argument>
+                                <argument>build</argument>
+                                <argument>--</argument>
+                                <!--<argument>&#45;&#45;prod</argument>-->
+                                <argument>-op</argument>
+                                <argument>${project.basedir}/../webapp/src/main/webapp/ng-app</argument>
+                            </arguments>
+                        </configuration>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.6.3</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat8x</containerId>
+                       <home>${project.basedir}\\..\\tomcat</home>
+                    </container>
+                    <configuration>
+                        <properties>
+                            <!-- <cargo.servlet.port>8200</cargo.servlet.port> -->
+                            <cargo.jvmargs>-Xmx2048m -Xms512m</cargo.jvmargs>
+                            <cargo.start.jvmargs>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=9009</cargo.start.jvmargs>
+                            <cargo.servlet.port>8443</cargo.servlet.port>
+                            <cargo.protocol>https</cargo.protocol>
+                            <cargo.tomcat.connector.clientAuth>false</cargo.tomcat.connector.clientAuth>
+                            <cargo.tomcat.connector.sslProtocol>TLS</cargo.tomcat.connector.sslProtocol>
+                            <cargo.tomcat.connector.keystoreFile>${project.basedir}/keystore.jks</cargo.tomcat.connector.keystoreFile>
+                            <cargo.tomcat.connector.keystorePass>gLCWLIayGU2iEDcH</cargo.tomcat.connector.keystorePass>
+                            <cargo.tomcat.connector.keyAlias>tomcat</cargo.tomcat.connector.keyAlias>
+                            <cargo.tomcat.httpSecure>true</cargo.tomcat.httpSecure>
+                        </properties>
+                        <configfiles>
+                            <configfile>
+                                <file>${project.basedir}/../tomcat/conf/context.xml</file>
+                                <todir>conf</todir>
+                            </configfile>
+                        </configfiles>
+                    </configuration>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

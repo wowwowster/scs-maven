@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="D:/workspace_ij/scs-ng/core/pom.xml" />
+        <option value="D:/workspace_ij/scs-ng/scs/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="D:/workspace_ij/scs-ng/core/constants/pom.xml" />
+        <option value="D:/workspace_ij/scs-ng/sword-java-apis/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://D:/workspace_ij/scs-ng/scs/out" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\jmarchet\AppData\Roaming\Subversion</configuration>
+  </component>
+</project>

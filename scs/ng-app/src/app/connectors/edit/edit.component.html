@@ -1,0 +1,77 @@
+<h1>Edit {{connectorProps?.name}} connector</h1>
+
+<form #connectorForm="ngForm" (ngSubmit)="onSubmit(connectorForm)">
+  <div class="form">
+    <md-card class="connector-def">
+    <md-card-content>
+      <h2>Connector Definition</h2>
+      <div class="form-group">
+        <span mdTooltip="Unique ID for the connector" mdTooltipPosition="right">
+          <md-input-container  class="input">
+            <input mdInput [(ngModel)]="cid" name="cid" placeholder="Connector ID" required="true"/>
+          </md-input-container>
+        </span>
+      </div>
+        <div class="form-group">
+        <span mdTooltip="Defines what this connector will be used for. Only one connector can be configured for authentication. There can be as many group retrievers as necessary.r" mdTooltipPosition="right">
+        <label class="example-margin">Usage:</label>
+         <md-checkbox class="checkbox" name="authentication"  >Authentication</md-checkbox>
+        <md-checkbox class="checkbox"  name="groupretrieval"  >Group retrieval</md-checkbox>
+        <md-checkbox class="checkbox"  name="indexing" [checked]="indexing" (change)="indexing=!indexing" >Indexing</md-checkbox>
+  </span>
+</div>
+<div class="form-group">
+  <span mdTooltip="Namespace to use for user/group names. Namespaces allow disambiguation for ACEs with the same name but originating from different systems e.g.: many systems contain a group named &quot;Administrators&quot; which is likely to contain different users." mdTooltipPosition="right">
+    <md-input-container  class="input">
+      <input mdInput placeholder="Namespace" [(ngModel)]="ns" name="ns"/>
+    </md-input-container>
+  </span>
+</div>
+    </md-card-content>
+  </md-card>
+  <md-card class="connector-conf" >
+  <md-card-content>
+    <h2>Connector Configuration</h2>
+
+  <div class="form-group" *ngFor="let confParam of connectorConf.confParams">
+    <span mdTooltip="{{confParam.description}}" mdTooltipPosition="right">
+      <md-input-container *ngIf="(confParam.type=='STRING' || confParam.type=='DECIMAL') && !confParam.isEncrypted" class="input">
+        <input mdInput placeholder="{{confParam.label}}" [required]="confParam.isMandatory" name="{{confParam.name}}" ngModel="{{confParam.value}}">
+      </md-input-container>
+      <md-input-container *ngIf="(confParam.type=='STRING' || confParam.type=='DECIMAL') && confParam.isEncrypted" class="input">
+        <input type="password" mdInput placeholder="{{confParam.label}}" [required]="confParam.isMandatory" name="{{confParam.name}}" ngModel="{{confParam.value}}">
+      </md-input-container>
+      <md-slide-toggle *ngIf="confParam.type=='BOOLEAN'" [checked]="confParam.value == 'true'" [required]="confParam.isMandatory" [name]="confParam.name"  ngModel>{{confParam.label}}</md-slide-toggle>
+      <md-select *ngIf="confParam.type=='ENUM'" placeholder="{{confParam.label}}" [required]="confParam.isMandatory" [name]="confParam.name" ngModel="{{confParam.value}}">
+  <md-option *ngFor="let value of confParam.permittedValues" [value]="value">
+    {{value}}
+  </md-option>
+</md-select>
+    </span>
+       </div>
+     </md-card-content>
+   </md-card>
+   <md-card class="connector-conf" *ngIf="indexing">
+   <md-card-content>
+     <h2>Indexer Configuration</h2>
+     <div class="form-group" *ngFor="let confParam of connectorConf.IndexerConf">
+       <span mdTooltip="{{confParam.description}}" mdTooltipPosition="right">
+         <md-input-container *ngIf="confParam.type=='STRING' || confParam.type=='DECIMAL'" class="input">
+           <input mdInput placeholder="{{confParam.label}}" name="{{confParam.name}}" [required]="confParam.isMandatory" ngModel="{{confParam.value}}">
+         </md-input-container>
+         <md-slide-toggle *ngIf="confParam.type=='BOOLEAN'" [checked]="confParam.value == 'true'" [required]="confParam.isMandatory" [name]="confParam.name"  ngModel>{{confParam.label}}</md-slide-toggle>
+         <md-select *ngIf="confParam.type=='ENUM'" placeholder="{{confParam.label}}" [required]="confParam.isMandatory" name="{{confParam.name}}" ngModel="{{confParam.value}}">
+         <md-option *ngFor="let value of confParam.permittedValues" [value]="value">
+         {{value}}
+         </md-option>
+         </md-select>
+       </span>
+          </div>
+   </md-card-content>
+ </md-card>
+ </div>
+ <div class="bottom-buttons">
+   <button type="submit" md-raised-button [disabled]="!connectorForm.form.valid" >SAVE</button>
+    <button md-raised-button>CANCEL</button>
+ </div>
+</form>

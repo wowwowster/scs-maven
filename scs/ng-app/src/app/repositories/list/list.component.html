@@ -1,0 +1,50 @@
+
+    <h1>Repositories List</h1>
+    <div class="connector-content">
+<div *ngIf="configured >0">
+    <md-list>
+      <md-list-item *ngFor="let repository of installedRepositories">
+         <h4 md-line>{{repository}}</h4>
+         <span mdTooltip="Edit" mdTooltipPosition="right" ><a md-mini-fab routerLink="../edit/{{repository.name}}"><md-icon>edit</md-icon></a></span>
+         <span mdTooltip="Monitor" mdTooltipPosition="right" ><a md-mini-fab routerLink="../monitor/{{repository.name}}" class="delete"><md-icon>timeline</md-icon></a></span>
+         <span mdTooltip="Delete" mdTooltipPosition="right" ><a md-mini-fab routerLink="." class="delete"><md-icon>delete</md-icon></a></span>
+      </md-list-item>
+    </md-list>
+  </div>
+  <div *ngIf="configured == 0">
+    <md-card id="no_connector">No repository installed. Add repository to get started.</md-card>
+  </div>
+
+</div>
+<div>
+  <h2>New repository</h2>
+<form #repositoryForm="ngForm" (ngSubmit)="onSubmit(repositoryForm)">
+  <div class="form">
+    <md-card>
+    <md-card-content>
+      <div>
+        <label>Customer ID: </label>
+        <input mdInput name="custid" required="true" ngModel/>
+      </div>
+<div class="">
+  <label>Source ID: </label>
+  <input mdInput name="sourceid" required="true" ngModel/>
+</div>
+      <div class="">
+        <label>Source name: </label>
+        <input mdInput name="sourcename" required="true" ngModel/>
+      </div>
+      <div class="">
+        <label>Service account Key: </label>
+        <textarea mdInput name="svckey" required="true" ngModel></textarea>
+      </div>
+
+    </md-card-content>
+  </md-card>
+ </div>
+ <div class="bottom-buttons">
+   <button type="submit" md-raised-button [disabled]="false" >SAVE</button>
+    <button md-raised-button>CANCEL</button>
+ </div>
+</form>
+</div>

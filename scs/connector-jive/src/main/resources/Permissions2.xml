@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SpecialPerms>
+	<default>
+	</default>
+	<blogs>
+		<group></group>
+	</blogs>
+	<socialgroups>
+		<group></group>
+	</socialgroups>
+	<space id="https://connections-dev.teradata.com/api/core/v3/places/328074">
+		<group>All Employees</group>
+	</space>
+</SpecialPerms>

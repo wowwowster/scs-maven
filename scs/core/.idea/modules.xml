@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://D:/workspace_ij/scs-ng/scs/constants/constants.iml" filepath="D:/workspace_ij/scs-ng/scs/constants/constants.iml" />
+      <module fileurl="file://D:/workspace_ij/scs-ng/scs/core/core.iml" filepath="D:/workspace_ij/scs-ng/scs/core/core.iml" />
+      <module fileurl="file://D:/workspace_ij/scs-ng/scs/scs.iml" filepath="D:/workspace_ij/scs-ng/scs/scs.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="robots" content="NOINDEX,NOFOLLOW" >
+	<title>Sword Connect - Login page</title>
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
+	<link rel="stylesheet" href="/static/css/pages.css" type="text/css" >
+	<script type="text/javascript" src="/static/script/jquery.min.js" ></script>
+	<script type="text/javascript" >
+//<!--
+if (((typeof sword) === "undefined") || (sword == null)) window["sword"] = {};
+
+sword.init = function() {
+	$(".ErrorMessage").hide();
+	sword.focusOnTF();
+	$("#loginform").bind("submit", sword.checkForm);
+}
+
+sword.focusOnTF = function() {
+	$("#txtUserID").focus();
+}
+
+sword.checkForm = function(event) {
+	if (($("#txtUserID").val().length < 1) || ($("#txtPassword").val().length < 1)) {
+		event.preventDefault();
+		$(".ErrorMessage").show();
+	} else $(".ErrorMessage").hide();
+}
+
+$(document).ready(sword.init);
+
+//-->
+	</script>
+</head>
+<body>
+	<div id="header" >
+		<div class="HeaderImgLeft" ></div>
+		<div class="HeaderImgRight" ></div>
+		<div class="HeaderText" >Authentication</div>
+	</div>
+	<div id="body" >
+		<form method="post" action="authenticate" id="loginform" >
+			<div>
+				<div>
+					<div><label class="LoginTxt" for="swU" >Name: </label><input class="LoginInput" id="txtUserID" name="swU" size="30" maxlength="30" type="text" placeholder="&lt;username&gt;" /></div>
+					<div><label class="LoginTxt" for="swP" >Password: </label><input class="LoginInput" id="txtPassword" name="swP" size="30" maxlength="30" type="password" /></div>
+					<div><span class="ErrorMessage" >Fields cannot be empty</span></div>
+					<div><input class="LoginBtn" name="Submit" value="Login" type="submit" /></div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div id="footer" class="tac" >
+		<div class="copy" >Copyright &copy; 2013 Sword Group. All Rights Reserved.</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.toolbar{
+ z-index: 1;
+ position: absolute;
+}
+
+.sidenav-content{
+display: flex;
+ min-height: 100%;
+flex-direction: column;
+align-items: center;
+}
+
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+.sidenav {
+  margin-top: 64px;
+}
+.sidenav menu{
+      padding: 0;
+}
+
+.toggle-nav:hover{
+  cursor: pointer;
+}
+.main-content{
+  width: 100%;
+  margin-top: 90px;
+  flex-grow: 2;
+  display: flex;
+}
+.footer{
+ height: 64px;
+ line-height: 64px;
+}
